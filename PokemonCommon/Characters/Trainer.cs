@@ -4,12 +4,14 @@ namespace PokemonCommon.Characters
 {
     public class Trainer
     {
+
+        public string Name { get; set; }
+
         public List<Pokemon> PokemonCollection { get; set; } = new List<Pokemon>();
 
-        // Detta är en statisk metod. Statiska metoder anropas via typen och inte via objekt.
-        public static void Greeting()
+        public Trainer(string name)
         {
-            Console.WriteLine("Hi!");
+            Name = name;
         }
 
         public void Catch(Pokemon pokemon)

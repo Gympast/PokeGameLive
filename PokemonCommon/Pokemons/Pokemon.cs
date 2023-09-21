@@ -1,4 +1,5 @@
 ﻿using PokemonCommon.Enums;
+using PokemonCommon.Pokemons.Attacks;
 
 namespace PokemonCommon.Pokemons
 {
@@ -6,8 +7,9 @@ namespace PokemonCommon.Pokemons
     {
         // Property för health points 
         // Databehållaren "bakom" en property kallas för fält.
-        private int _healthPoints = 100;
-        public int HealthPoints
+        private double _healthPoints = 100;
+
+        public double HealthPoints
         {
             // Get är en metod som anropas när värdet på en property ska läsas
             get { return _healthPoints; }
@@ -17,25 +19,23 @@ namespace PokemonCommon.Pokemons
 
         // Property för Name
         private string _name;
+
         public string Name
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
+            get { return _name; }
+            set { _name = value; }
         }
 
         // Property för Type
         private PokeTypes _type;
+
         public PokeTypes Type
         {
             get { return _type; }
             set { _type = value; }
         }
+
+        public Attack[] Attacks { get; } = new Attack[4];
 
         // Detta är en tom konstruktor, om ingen konstruktor deklareras så finns en sådan i alla klasser utan at tman behöver deklarera den.
         // En konstruktor är en metod som returnerar en ny instans av den typ den befinner sig i, returtyp och namn slås ihop.
@@ -51,10 +51,18 @@ namespace PokemonCommon.Pokemons
             _type = type;
         }
 
-        // Detta är en instans-metod. Till skillnad från statiska metoder anropas dessa enbart genom objekt.
-        public virtual void Attack(Pokemon target)
+        public void LearnAttack(Attack attack, int attackIndex)
         {
+            if (attackIndex > 3)
+            {
+                return;
+            }
 
+            if (attack == null)
+            {
+                return;
+            }
+            Attacks[attackIndex] = attack;
         }
     }
 }

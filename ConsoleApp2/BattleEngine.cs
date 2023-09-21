@@ -1,6 +1,12 @@
-﻿namespace PokeGame
+﻿using PokemonCommon.Pokemons;
+using PokemonCommon.Pokemons.Attacks;
+
+namespace PokeGame;
+
+public static class BattleEngine
 {
-    internal class BattleEngine
+    public static void MakeAttack(Pokemon target, Attack attack)
     {
+        target.HealthPoints -= attack.Damage;
     }
 }
