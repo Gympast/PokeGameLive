@@ -6,11 +6,56 @@ namespace PokemonCommon;
 
 public static class BattleEngine
 {
+    public static void Fight(Pokemon attacker, Pokemon target)
+    {
+        double currentHealthpoints = 0;
+        while (true)
+        {
+            Console.WriteLine("Välja attack:");
+            for (int i = 0; i < attacker.Attacks.Length; i++)
+            {
+                if (attacker.Attacks[i] == null)
+                {
+                    break;
+                }
+
+                Console.WriteLine($"{i + 1} {attacker.Attacks[i].Name}");
+            }
+
+            int chosenAttack = int.Parse(Console.ReadLine()) - 1;
+            currentHealthpoints = target.HealthPoints;
+            Console.WriteLine($"{attacker.Name} attacks {target.Name} with {attacker.Attacks[chosenAttack].Name}");
+            MakeAttack(target, attacker.Attacks[chosenAttack], attacker);
+            Thread.Sleep(1000);
+            Console.WriteLine($"{target.Name} loses {currentHealthpoints - target.HealthPoints} healthpoints");
+            if (target.HealthPoints < 0)
+            {
+                Console.WriteLine($"{target.Name} fainted");
+                break;
+            }
+            currentHealthpoints = attacker.HealthPoints;
+            Console.WriteLine($"{target.Name} attacks {attacker.Name} with {target.Attacks[0].Name}");
+            MakeAttack(attacker, target.Attacks[0], attacker);
+            Console.WriteLine($"{attacker.Name} loses {currentHealthpoints - attacker.HealthPoints} healthpoints");
+            Thread.Sleep(1000);
+            if (attacker.HealthPoints < 0)
+            {
+                Console.WriteLine($"{attacker.Name} fainted");
+                break;
+            }
+        }
+    }
+
+
     // Detta är en statisk metod. Statiska metoder anropas via typen och inte via objekt.
-    public static void MakeAttack(Pokemon target, Attack attack)
+    public static void MakeAttack(Pokemon target, Attack attack, Pokemon attacker)
     {
         Effectiveness effectiveness = CheckEffectiveness(attack.Type, target.Types.ToArray());
+
+        BattleUi.DisplayDamageEffectiveness(effectiveness, attack, attacker);
+
         double modifier = (double)effectiveness / 100.0;
+        
 
         target.HealthPoints -= attack.Damage * modifier;
     }
