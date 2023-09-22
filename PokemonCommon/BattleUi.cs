@@ -9,9 +9,9 @@ public static class BattleUi
     private static Dictionary<Effectiveness, string> messages = new Dictionary<Effectiveness, string>()
     {
         { Effectiveness.None, "It has no effect!" },
-        { Effectiveness.NotVery, "It's not very effectiv..."},
+        { Effectiveness.NotVery, "It's not very effective..."},
         { Effectiveness.Normal, ""},
-        { Effectiveness.Super, "It's super effectiv!"}
+        { Effectiveness.Super, "It's super effective!"}
     };
 
     public static void DisplayDamageEffectiveness(Effectiveness effectiveness, Attack attack, Pokemon attacker)
